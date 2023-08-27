@@ -3,7 +3,8 @@ import styles from "../../styles/Product.module.css"
 import Image from "next/image";
 import axios from "axios";
 import {useDispatch} from "react-redux";
-import { addProduct } from "@/redux/cartSlice";
+import { addProduct} from "@/redux/cartSlice";
+import { optimizeFonts } from "@/next.config";
 
 
 
@@ -14,21 +15,12 @@ const product = ({sweet}) => {
     const [Options, setOptions] = useState([])
     const [Quantity,setQuantity] = useState(1)
     const dispatch = useDispatch()
+    const [PersonalMessageChecked, setPersonalMessageChecked] = useState(false)
+    const [PersonalMessage, setPersonalMessage] = useState('')
     
 
-    const [isChecked, setIsChecked] = useState(false)
-    const [message, setmessage] = useState('')
-
-    const handleCheckboChange = (event) => {
-        setIsChecked(event.target.checked);
-    };
-
-    const handleMessageChange = (event) => {
-        setmessage(event.target.value);
-    };
-
     const changePrice = (number) => {
-        setPrice(price + number);
+        setPrice((prev) => parseFloat((prev + number).toFixed(2)));
     }
 
     const handleSize = (sizeIndex) => {
@@ -39,6 +31,10 @@ const product = ({sweet}) => {
 
     const handleChange = (e, option) => {
         const checked = e.target.checked;
+
+        if (option.text === "Personal Message") {
+            setPersonalMessageChecked(checked)
+        }
 
         if (checked){
             changePrice(option.price);
@@ -51,7 +47,10 @@ const product = ({sweet}) => {
     };
 
     const handleClick = () => {
-        dispatch(addProduct({...sweet, Options, price, Quantity}))
+      
+        dispatch(addProduct({...sweet, Options, price, Quantity,  PersonalMessage}))
+  
+        setPersonalMessage('')
 
     }
 
@@ -68,7 +67,7 @@ const product = ({sweet}) => {
 
             <div className={styles.right}>
                 <h1 className={styles.title}> {sweet.title} </h1>
-                <span className={styles.price}>${price}</span>
+                <span className={styles.price}>£{price}</span>
                 <p className={styles.desc}>
                     Introducing the Chocolate Variety Pack: Indulge in a heavenly assortment of all your favorite chocolates conveniently curated in one delightful package. Our Chocolate Variety Pack is a treasure trove of irresistible treats, featuring renowned brands like M&M's, Mars, Twix, and Snickers.
 
@@ -112,12 +111,20 @@ const product = ({sweet}) => {
                             className={styles.checkbox}
                             onChange = {(e)=>handleChange(e, option)}
                             />
-                            <label htmlFor="double">{option.text}</label>
+                            <label htmlFor={option.text}>{option.text}</label>
+                            {PersonalMessageChecked && option.text === "Personal Message" && (
+                                <textarea 
+                                className={styles.textarea}
+                                value={PersonalMessage}
+                                onChange={(e) => setPersonalMessage(e.target.value)}
+                                placeholder="Enter your personal message..."
+                                />
+                            )}
                         </div>
                     ))}
                 </div>
                 <div className={styles.add}>
-                <input onChange={(e) => setQuantity(e.target.value)} type="number" defaultValue={1} className={styles.quantity} min={0}/>
+                <input onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" defaultValue={1} className={styles.quantity} min={0}/>
                 <button className={styles.button} onClick={handleClick}>Add to cart</button>
                 </div>
             </div>  
