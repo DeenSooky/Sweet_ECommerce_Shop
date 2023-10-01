@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import { useRouter } from "next/router";
 import { reset } from "../redux/cartSlice";
+import OrderDetailed from "@/Components/orderDetailed";
 
 
 
@@ -17,19 +18,21 @@ const cart = () => {
 
     const cart = useSelector((state) => state.cart)
     const [open, setOpen] = useState(false)
-    const dispatch = useDispatch()
-    const amount =cart.total
+    const [cash, setCash] = useState(false)
+    const amount = cart.total
     const currency = "GBP"
-    const router = useRouter()
     const style = {layout:"vertical"}
+    const dispatch = useDispatch()
+    const router = useRouter()
 
     // Create order logic from the first code snippet
     const createOrder = async (data) => {
         try{
-            const res = await axios.post("http:/localhost:3000/api/orders", data)
-            res.status === 201 && router.push(`/orders/${res.data._id}`)
-            dispatch(reset())
-            
+            const res = await axios.post("http://localhost:3000/api/orders", data)
+            if (res.status === 201) {
+                router.push(`/Orders/${res.data._id}`);
+                dispatch(reset())
+            }
         }catch (err){
             console.log(err)
         }
@@ -81,7 +84,7 @@ const cart = () => {
                             createOrder({
                                 customer: shipping.name.full_name,
                                 address: shipping.address.address_line_1,
-                                total:cart.total,
+                                Total: cart.total,
                                 method: 1,
                             });
 
@@ -176,7 +179,7 @@ const cart = () => {
 
                     {open ? (  
                     <div className={styles.paymetnMethods}>
-                        <button className={styles.payButton}>CASH ON DELIVERY</button>
+                        <button className={styles.payButton} onClick={() => setCash(true)}>CASH ON DELIVERY</button>
                         <PayPalScriptProvider options={{ clientId: "Af_z8ide5nzVJl0xnUwX9VTXc8AByrX51yjtlv90SnU7iyAQsOKRM25Ul0ITFtnPeuxScsJ5TAb4Ajed", currency: "GBP", intent: "capture", "disableFunding": "credit,card", "enableFunding": "venmo" }}>
                              <ButtonWrapper currency={currency} showSpinner={false} />
                          </PayPalScriptProvider>
@@ -186,7 +189,7 @@ const cart = () => {
                     )}
                 </div>
             </div>
-
+            {cash && <OrderDetailed total={cart.total} createOrder={createOrder}/>}
         </div>
     );
 };

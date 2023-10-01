@@ -8,16 +8,9 @@
 }
 
 .table {
-    width: 100%;
     text-align: left;
     margin-bottom: 50px;
-
-}
-
-.row {
-    display: flex;
-    justify-content: space-around;
-    
+    width: 100%;
 }
 
 .row:last-child {

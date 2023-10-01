@@ -2,7 +2,6 @@ import dbConnect from "@/util/mongo";
 import Order from "@/models/Order";
 
 const handler = async (req, res) => {
-    
     const {method} = req;
 
     await dbConnect();
@@ -20,9 +19,11 @@ const handler = async (req, res) => {
     if(method === "POST"){
         try{
             const order = await Order.create(req.body)
+            console.log("Created order:", order);
             res.status(201).json(order)
 
         }catch(err){
+            console.error("Error creating order:", err);
             res.status(500).json(err)
         }
     }
