@@ -17,7 +17,8 @@
     width: 100px;
     height: 100px;
     position: relative;
-    left: 40px;
+    left: 30px;
+    border: 1px solid black;
 }
 
 .tr{
@@ -87,7 +88,7 @@
     background-color: white;
     color: lightseagreen;
     font-weight: bold;
-    width: 358px;
+    width: 100%;
     border-radius: 5px;
 }
 

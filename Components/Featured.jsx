@@ -36,12 +36,6 @@ const Featured = () => {
         return () => clearInterval(slideInterval);
     }, [index] );
 
-      
-
-
-
-
-
     return (
         <div className={styles.container}>
             <div className={styles.arrowContainer} style={{right:0}} onClick={()=>handleArrow("r")} >
@@ -69,3 +63,12 @@ const Featured = () => {
 };
 
 export default Featured; 
+
+
+
+
+
+
+
+
+

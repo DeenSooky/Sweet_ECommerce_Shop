@@ -1,5 +1,5 @@
-import dbConnect from "@/util/mongo";
-import Order from "@/models/Order";
+import dbConnect from "../../../util/mongo";
+import Order from "../../../models/Order";
 
 const handler = async (req, res) => {
   const {
@@ -17,6 +17,7 @@ const handler = async (req, res) => {
       res.status(500).json(err);
     }
   }
+  
   if (method === "PUT") {
     try {
       const order = await Order.findByIdAndUpdate(id, req.body, {
@@ -26,8 +27,6 @@ const handler = async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-  }
-  if (method === "DELETE") {
   }
 };
 

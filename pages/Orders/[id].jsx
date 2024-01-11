@@ -3,7 +3,6 @@ import styles from "../../styles/Order.module.css";
 import axios from "axios";
 
 const Order = ({order}) => {
-
     const status = order.status;
 
     const statusClass = (index) => {
@@ -16,7 +15,6 @@ const Order = ({order}) => {
 
     return (
         <div className={styles.container}>
-
             <div className={styles.left}>
                 <div className={styles.row}>
                     <table className={styles.table}>
@@ -31,7 +29,6 @@ const Order = ({order}) => {
                         </thead>
 
                         <tbody>
-
                             <tr  className={styles.tr}>
                                 
                                 <td>
@@ -47,7 +44,7 @@ const Order = ({order}) => {
                                 </td>
                                 
                                 <td>
-                                    <span className={styles.total}>£{order.Total}</span>
+                                    <span className={styles.total}>£{order.total}</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -57,34 +54,34 @@ const Order = ({order}) => {
 
                 <div className={styles.row}>
                     <div className={statusClass(0)}>
-                        <Image  className={styles.checkedIcon} src="/img/basket.png" width={50} height={50} alt="paid"/>
+                        <Image  className={styles.checkedIcon} src="/img/basket.png" width={100} height={100} alt="paid"/>
                         <span><b>Payment</b></span>
                         <div className={styles.checkedIcon}>
-                            <Image src="/img/tick.png" width={30} height={30} alt="checked"/>
+                            <Image src="/img/tick.png" width={50} height={50} alt="checked"/>
                         </div>
                     </div>
 
                     <div className={statusClass(1)}>
-                        <Image src="/img/box.png" width={50} height={50} alt="bike"/>
+                        <Image src="/img/box.png" width={100} height={100} alt="bike"/>
                         <span><b>Preparing</b></span>
                         <div className={styles.checkedIcon}>
-                            <Image src="/img/tick.png" width={30} height={30} alt="prep"/>
+                            <Image src="/img/tick.png" width={50} height={50} alt="prep"/>
                         </div>
                     </div>
 
                     <div className={statusClass(2)}>
-                        <Image src="/img/transit.png" width={50} height={50} alt="bike"/>
+                        <Image src="/img/transit.png" width={100} height={100} alt="bike"/>
                         <span><b>On the way</b></span>
                         <div className={styles.checkedIcon}>
-                            <Image src="/img/tick.png" width={30} height={30} alt="prep"/>
+                            <Image src="/img/tick.png" width={50} height={50} alt="prep"/>
                         </div>
                     </div>
 
                     <div className={statusClass(3)}>
-                        <Image src="/img/party.png" width={50} height={50} alt="paid"/>
+                        <Image src="/img/party.png" width={100} height={100} alt="paid"/>
                         <span><b>Delivered</b></span>
                         <div className={styles.checkedIcon}>
-                            <Image src="/img/tick.png" width={30} height={30} alt="checked"/>
+                            <Image src="/img/tick.png" width={50} height={50} alt="checked"/>
                         </div>
                     </div>
 
@@ -92,36 +89,30 @@ const Order = ({order}) => {
             </div>
 
             <div className={styles.right}>
-            <div className={styles.wrapper}>
+                <div className={styles.wrapper}>
                     <h2 className={styles.title}>CART TOTAL</h2>
                     <div className={styles.totalText}>
-                        <b className={styles.totalTextTitle}>Subtotal:</b>£{order.Total}
+                        <b className={styles.totalTextTitle}>Subtotal:</b>£{order.total}
                     </div>
                     <div className={styles.totalText}>
                         <b className={styles.totalTextTitle}>Discount:</b>£0.00
                     </div>
                     <div className={styles.totalText}>
-                        <b className={styles.totalTextTitle}>Total:</b>£{order.Total}
+                        <b className={styles.totalTextTitle}>Total:</b>£{order.total}
                     </div>
                     <button disabled className={styles.button}>PAID</button>
-
                 </div>
-
             </div>
-
         </div>
     );
 };
 
 export const getServerSideProps = async ({params}) => {
+    
     const res = await axios.get (`http://localhost:3000/api/orders/${params.id}`);
     return {
-        props: {
-            
-            order: res.data
-        }
+        props: {order: res.data},
     }
-    
 };
 
 export default Order;

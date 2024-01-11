@@ -22,45 +22,14 @@
     height: 60%;
     position: relative;
     border: 3px solid black ;
+    border-radius: 5px;
     left: 40px;
 
    
 }
 
-.imgContainer2 {
-    width: 80%;
-    height: 60%;
-    position: relative;
-    border: 2px solid black ;
-    left: 40px;
-
-}
-
-.imgContainer3 {
-    width: 80%;
-    height: 60%;
-    position: relative;
-    border: 2px solid black ;
-    left: 40px;
-}
-
-.imgContainer3 img {
-    margin: 0px 0 0 0px;
-    height: 494px;
-    width: 735px;
-}
-
-.imgContainer2 img {
-    margin: 0px 0 0 0px;
-    height: 494px;
-    width: 735px;
-}
-
-
-
 .imgContainer img {
-    margin: 0px 0 0 0px;
-    height: 494px;
+    height: 481px;
     width: 735px;
   }
 

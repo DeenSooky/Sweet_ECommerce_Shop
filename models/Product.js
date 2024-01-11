@@ -12,6 +12,11 @@ const ProductSchema = new mongoose.Schema ({
             required:true,
             maxlength: 200,
         },
+        longdesc: {
+            type:String,
+            required:true,
+            maxlength: 10000,
+        },
         img: {
             type:String,
             required:true,

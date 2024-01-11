@@ -3,12 +3,12 @@ import styles from "../../styles/Product.module.css"
 import Image from "next/image";
 import axios from "axios";
 import {useDispatch} from "react-redux";
-import { addProduct} from "@/redux/cartSlice";
-import { optimizeFonts } from "@/next.config";
+import { addProduct} from "../../redux/cartSlice";
 
 
 
-const product = ({sweet}) => {
+
+const Product = ({sweet}) => {
 
     const [size,setSize] = useState(0)
     const [price,setPrice] = useState(sweet.prices[0])
@@ -49,7 +49,7 @@ const product = ({sweet}) => {
     const handleClick = () => {
       
         dispatch(addProduct({...sweet, Options, price, Quantity,  PersonalMessage}))
-  
+          
         setPersonalMessage('')
 
     }
@@ -68,19 +68,7 @@ const product = ({sweet}) => {
             <div className={styles.right}>
                 <h1 className={styles.title}> {sweet.title} </h1>
                 <span className={styles.price}>£{price}</span>
-                <p className={styles.desc}>
-                    Introducing the Chocolate Variety Pack: Indulge in a heavenly assortment of all your favorite chocolates conveniently curated in one delightful package. Our Chocolate Variety Pack is a treasure trove of irresistible treats, featuring renowned brands like M&M's, Mars, Twix, and Snickers.
-
-                    With this carefully crafted assortment, you can experience the joy of indulging in a delectable selection of chocolates that cater to every craving. Whether you have a soft spot for melt-in-your-mouth M&M's or crave the caramel-infused goodness of a Mars bar, this variety pack has something to satisfy every chocolate lover's palate.
-
-                    <br/>Imagine unwrapping each delectable piece to reveal the rich and velvety chocolate goodness that awaits. From the smooth and creamy texture of Twix to the perfect blend of nougat, caramel, and peanuts in Snickers, every bite is a sensational journey of flavors and textures.</p>
-
-                    <p className={styles.desc}>Our Chocolate Variety Pack is perfect for sharing joyful moments with loved ones or treating yourself to a delightful solo indulgence. It also makes a wonderful gift for birthdays, holidays, or any special occasion, allowing recipients to experience the pure bliss of a diverse chocolate collection.
-
-                    Whether you're hosting a gathering, stocking up your pantry, or simply seeking a well-deserved moment of sweetness, our Chocolate Variety Pack delivers an exceptional chocolate experience. Each piece is meticulously crafted to ensure the highest quality and the ultimate satisfaction.
-
-                <br/>Visit our website and explore the world of chocolate delight with our Chocolate Variety Pack. It's time to elevate your chocolate experience and savor the harmonious blend of iconic flavors that have captured the hearts of chocolate enthusiasts worldwide. Treat yourself or someone special to the joyous medley of M&M's, Mars, Twix, and Snickers, all in one irresistible package.</p>
-                
+                <p className={styles.desc}>{sweet.longdesc}</p>
                 <h3 className={styles.choose}>Choose which size</h3>
                 <div className={styles.sizes}>
                     <div className={styles.size} onClick={() =>handleSize(0)}>
@@ -142,4 +130,4 @@ export const getServerSideProps = async ({params}) => {
     }
 };
 
-export default product;
+export default Product;

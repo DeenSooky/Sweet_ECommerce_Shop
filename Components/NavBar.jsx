@@ -30,25 +30,29 @@ const NavBar = () => {
             </div>
         </div>
         <div className={styles.item}>
-            <div className={styles.list}>
-                <div className={styles.listItem}>Home</div>
-                <div className={styles.listItem}>Menu</div>
-                <div className={styles.logo}>
+            <ul className={styles.list}>
+                <Link href = "/" passHref className={styles.listItem}>
+                    <li>SweetHub</li>
+                </Link>
+                <li className={styles.listItem}>TreatList</li>
+                <li className={styles.logo}>
                 <Image src="/img/sweet_shop_logo2.png" alt="logo" width="190" height="85"/> 
-                </div>
-                <div className={styles.listItem}>Blog</div>
-                <div className={styles.listItem}>Contact</div>
-            </div>
+                </li>
+                <Link href="/blog" style={{width: "250px", marginLeft: "35px"}} className={styles.listItem} >
+                    <li>Sweet Stories</li>
+                </Link> 
+
+                <Link href="/user" className={styles.listItem}>
+                    <li>Login/Register</li>
+                </Link>
+            </ul>
         </div>
+
         <Link href = "/cart" passHref> 
             <div className={styles.item}>
                 <div className={styles.cart_container}>
-                    <div className={styles.trolley}>
-                        <Image src="/img/trolley2.png" alt="Trolley" width="60" height="60" />
-                    </div>
-                    <div className={styles.CartNumber}>
-                        <p className={styles.number}>{quantity}</p>
-                    </div>
+                    <Image src="/img/trolley2.png" alt="Trolley" width="60" height="60" />
+                    <p className={styles.number}>{quantity}</p>
                 </div>
             </div>
         </Link>

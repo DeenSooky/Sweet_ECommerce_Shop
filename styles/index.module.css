@@ -1,0 +1,227 @@
+.container {
+    height: fit-content;
+    width: fit-content;
+    padding: 20px 10px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+
+}
+
+
+
+.magGlass{
+    background-color: #EC08CCBA;
+    border-radius: 10px;
+    padding: 7px;
+    left: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.searchContainer {
+    border: 2px solid #EC08CCBA;
+    border-radius: 10px;
+    height: 37px;
+    bottom: 120px;
+    left: 800px;
+    position: relative;
+    width: 250px;
+}
+
+/* Step 2: Shake animation class */
+.shake {
+    animation: shake 0.5s;
+    
+}
+  
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25%, 75% {
+        transform: translateX(-7px);
+    }
+    50% {
+        transform: translateX(7px);
+    }
+}
+
+
+
+
+.searchBar {
+    border-radius: 5px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    position: relative;
+    bottom: 13px;
+    outline: none;
+
+    color: #EC08CCBA;
+
+}
+  
+
+.title {
+    color: black;
+    text-align: center;
+}
+
+.desc {
+    font-size: 24px;
+    color: #444;
+    width: 80%;
+    text-align: center;
+    bottom: 60px;
+    position: relative;
+}
+
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    bottom: 20px;
+}
+
+.card {
+    min-width: 450px;
+    max-width: 450px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 40px;
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+
+.img {
+    border-bottom: 2px solid black;
+}
+
+.title2 {
+    font-size: 25px;
+    font-weight: bold;
+    color: #ec08ccba;
+   text-align: center;
+}
+
+
+.post {
+    font-size: 17px;
+    font-weight: bold;
+    color: #666;
+    text-align: start;
+}
+
+.content {
+    text-align: center;
+    color: #777;
+    position: relative;
+    bottom: 20px;
+    
+}
+
+
+
+
+.button {
+    border: 2px solid #ec08ccba;
+    background-color: #ec08ccba;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    height: 50px;
+    width: 150px;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    bottom: 10px;
+}
+
+.addButton {
+    padding: 10px;
+    border: 2px solid #EC08CCBA;
+    background-color: #EC08CCBA;
+    width: 160px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    right: 770px;
+    bottom: 60px;
+    position: relative;
+    font-size: 14px;
+}
+
+.addButtonNoToken {
+        padding: 10px;
+    border: 2px solid #EC08CCBA;
+    background-color: #EC08CCBA;
+    width: 160px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    right: 850px;
+    bottom: 60px;
+    position: relative;
+    font-size: 14px;
+
+}
+
+.ManageButton {
+    padding: 10px;
+    border: 2px solid #EC08CCBA;
+    background-color: #EC08CCBA;
+    width: 160px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    right: 930px;
+    bottom: 15px;
+    position: relative;
+    font-size: 14px;
+}
+
+.seeAll {
+    padding: 7px;
+    border: 2px solid #EC08CCBA;
+    background-color: #EC08CCBA;
+    width: 160px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    font-size: 14px;
+}
+
+
+.err{
+    color: red;
+    font-weight: bold;
+    position: absolute;
+    left: 25px;
+    top: 200px;
+}
+
+
+  
+
+
+
+

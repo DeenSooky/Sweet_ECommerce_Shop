@@ -1,0 +1,170 @@
+/* CheckOrder.module.css */
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(245, 240, 240, 0.548);
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper1 {
+    max-height: 100%;
+    position: fixed;
+    font-size: 20px;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    width: 70%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    max-height: 50vh;
+    overflow-y: scroll;
+    border: 3px solid #ec08ccba;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper2{
+    max-height: 25%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    width: 40%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    border: 3px solid #ec08ccba;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper3{
+    max-height: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    width: 70%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    border: 3px solid #ec08ccba;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.close1 {
+    position: relative;
+    right: 670px;
+    bottom: 220px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    width: 23px;
+    padding: 5px;
+    text-align: center;
+    z-index: 2;
+    
+}
+
+.close2 {
+    position: relative;
+    right: 385px;
+    bottom: 100px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    width: 23px;
+    padding: 5px;
+    text-align: center;
+    z-index: 2;
+    
+}
+
+.close3 {
+    position: relative;
+    right: 670px;
+    bottom: 110px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    width: 23px;
+    padding: 5px;
+    text-align: center;
+    z-index: 2;
+    
+}
+
+.title {
+    text-align: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.btn {
+    background-color: #ec08ccba;
+    color: white;
+    border-radius: 5px;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+
+.msg {
+    text-align: center;
+    font-size: 24px;
+}
+
+.input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: red;
+}
+
+/* Add other styles as needed */
+
+.checkOrderButton {
+    margin: 30px;
+    padding: 10px;
+    background-color: #EC08CCBA;
+    width: 150px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    left: 1700px;
+    border: none;
+}
+
+.item {
+    font-weight: 400;
+}
+
+  
