@@ -1,13 +1,15 @@
+// Import necessary modules
 import dbConnect from "../../../util/mongo";
 import Order from "../../../models/Order";
 import User from "../../../models/Users";
 import jwt from 'jsonwebtoken';
 
+// Define the API route handler
 const handler = async (req, res) => {
   const { method, cookies, body } = req;
   const token = cookies.token;
-  console.log("Token at order stage:", token);
 
+  // Connect to the MongoDB database
   await dbConnect();
 
   // Decode the token to get user information
@@ -24,16 +26,18 @@ const handler = async (req, res) => {
     }
   }
 
+  // Handling GET request
   if (method === "GET") {
     try {
       // If a user is logged in, fetch orders associated with the user
-      const orders = await Order.find()
+      const orders = await Order.find();
       res.status(200).json(orders);
     } catch (err) {
       res.status(500).json(err);
     }
   }
 
+  // Handling POST request
   if (method === "POST") {
     try {
       if (!token) {
@@ -49,7 +53,6 @@ const handler = async (req, res) => {
           // Update the user's orders array
           user.orders.push(order._id);
           await user.save();
-          console.log("updatedUser:", user);
 
           res.status(201).json(order);
         } catch (userError) {
@@ -64,4 +67,5 @@ const handler = async (req, res) => {
   }
 };
 
+// Export the handler function
 export default handler;

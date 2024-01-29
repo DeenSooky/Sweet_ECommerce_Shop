@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import authReducer from '../redux/userReducer';
-import store from '../redux/store'; 
+import cartReducer from './cartReducer'; // Assuming you have a separate file for cartReducer
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  cart: store,
+  cart: cartReducer,
 });
 
 export default rootReducer;

@@ -11,6 +11,8 @@
 
 
 
+
+
 .magGlass{
     background-color: #EC08CCBA;
     border-radius: 10px;
@@ -76,7 +78,7 @@
     color: #444;
     width: 80%;
     text-align: center;
-    bottom: 60px;
+    bottom: 80px;
     position: relative;
 }
 

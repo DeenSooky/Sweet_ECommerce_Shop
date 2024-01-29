@@ -1,5 +1,4 @@
 // Import necessary libraries
-import dbConnect from "../../../util/mongo";
 import User from "../../../models/Users";
 import cookie from "cookie";
 import bcrypt from "bcrypt";
@@ -16,6 +15,7 @@ const generateJwtAndSetCookie = (res, username) => {
   return token;
 };
 
+// Define the API route handler
 export default async (req, res) => {
   if (req.method === "POST") {
     const { username, password } = req.body;
@@ -24,6 +24,7 @@ export default async (req, res) => {
       // Check if the user already exists
       const existingUser = await User.findOne({ username });
 
+      // If the username already exists, return a 400 Bad Request response
       if (existingUser) {
         return res.status(400).json({ success: false, message: "Username already exists" });
       }
@@ -33,12 +34,10 @@ export default async (req, res) => {
 
       // Generate JWT and set cookie
       const token = generateJwtAndSetCookie(res, username);
-      console.log("Token given:", token);
 
       // Create a new user without storing the token or jwtSecret in the database
       const newUser = new User({ username: username, password: hashedPassword });
 
-      console.log("User registered:", newUser);
       await newUser.save();
 
       res.status(200).json({ success: true, message: "Registration successful" });

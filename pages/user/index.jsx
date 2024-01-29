@@ -1,37 +1,31 @@
+// Import necessary dependencies
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import styles from '../../styles/User.module.css';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../../redux/authSlice';
+import styles from '../../styles/User.module.css'
 import Link from 'next/link';
 
+// LoginPage component
 const LoginPage = () => {
+  // State for active tab, user credentials, and error handling
   const [activeTab, setActiveTab] = useState('login'); 
-  const dispatch = useDispatch()
-
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('')
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('');
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [error, setError] = useState(false);
   const router = useRouter()
 
+  // Function to handle user login
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/api/users/login',  {
-        username: loginUsername,
-        password: loginPassword,
-      },
-      {withCredentials: true}
+      const response = await axios.post(
+        'http://localhost:3000/api/users/login',
+        { username: loginUsername, password: loginPassword },
+        { withCredentials: true }
       );
-
-      dispatch(loginUser({username: loginUsername}))
-
-      console.log(response.data);
-      setLoggedIn(true)
+  
       // Redirect to the homepage after successful login
       router.push("/")
     } catch (err) {
@@ -46,21 +40,20 @@ const LoginPage = () => {
     }
   };
 
+  // Function to handle user registration
   const handleRegister = async () => {
     try {
-      if(registerUsername != '' & registerPassword != ''){
-        const response = await axios.post('http://localhost:3000/api/users/register', {
-          username: registerUsername,
-          password: registerPassword,
-        },
-        {withCredentials: true}
+      // Check if both username and password are provided for registration
+      if (registerUsername !== '' && registerPassword !== '') {
+        const response = await axios.post(
+          'http://localhost:3000/api/users/register',
+          { username: registerUsername, password: registerPassword },
+          { withCredentials: true }
         );
-        dispatch(loginUser({username: registerUsername}))
-        console.log(response.data);
-        setLoggedIn(true)
+      
         // Redirect to the homepage or login page after successful registration
         router.push("/")
-      }else{
+      } else {
         setError(true);
         setRegisterUsername('')
         setRegisterPassword('')
@@ -91,30 +84,34 @@ const LoginPage = () => {
         {activeTab === 'login'
           ? 'Welcome back! We\'re delighted to see you again at Sweets4Every1. Log in to your account and continue enjoying our personalized experiences. Your sweet journey awaits!'
           : 'Welcome, new user! We\'re excited to have you join our community at Sweets4Every1. Create an account and unlock a world of personalized experiences. Your journey with us starts here!'
-          }
+        }
       </p>
 
       <div className={styles.wrapper}>
         <div className={styles.tabs}>
+          {/* Tabs for login and registration */}
           <span
             className={activeTab === 'login' ? styles.activeTab : styles.tab}
-            onClick={() => {setActiveTab('login') 
-            setErrorMessage('')
-          }}
+            onClick={() => {
+              setActiveTab('login');
+              setErrorMessage('');
+            }}
           >
             Login
           </span>
           <span
             className={activeTab === 'register' ? styles.activeTab : styles.tab}
-            onClick={() => {setActiveTab('register') 
-             setErrorMessage('')}
-            }
+            onClick={() => {
+              setActiveTab('register');
+              setErrorMessage('');
+            }}
           >
             Register
           </span>
         </div>
 
         <h1 className={styles.title}>{activeTab === 'login' ? 'Login' : 'Register'}</h1>
+        {/* Input fields for username and password */}
         <input
           type="text"
           className={styles.input}
@@ -129,15 +126,18 @@ const LoginPage = () => {
           value={activeTab === 'login' ? loginPassword : registerPassword}
           onChange={(e) => (activeTab === 'login' ? setLoginPassword(e.target.value) : setRegisterPassword(e.target.value))}
         />
+        {/* Button for login or registration based on the active tab */}
         <button className={styles.button} onClick={activeTab === 'login' ? handleLogin : handleRegister}>
           {activeTab === 'login' ? 'Login' : 'Register'}
         </button>
 
+        {/* Member registration message and link to switch to registration */}
         <div className={styles.memberMsg}>
           <p className={styles.notMember}>Not a member?</p>
-          <p className={styles.signUp} onClick={() => {setActiveTab('register')}}>Register now.</p>
+          <p className={styles.signUp} onClick={() => { setActiveTab('register')}}>Register now.</p>
         </div>
         
+        {/* Link to the admin login page */}
         <Link href="/admin">
           <div className={styles.adminMsg}>
             <p className={styles.notAdmin}>Are you an admin?</p>
@@ -145,7 +145,7 @@ const LoginPage = () => {
           </div>
         </Link>
 
-
+        {/* Display error message if there is an error */}
         <p className={styles.errorMessage}>
           {error && <span className={styles.error}>{errorMessage}</span>}
         </p>
@@ -154,4 +154,5 @@ const LoginPage = () => {
   );
 };
 
+// Export the LoginPage component
 export default LoginPage;

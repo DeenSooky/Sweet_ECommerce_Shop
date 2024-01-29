@@ -1,54 +1,31 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { loginUser, logoutUser } from "../redux/authSlice"; // Adjust the import path based on your actual file structure
-import axios from "axios"; // Import Axios
+// Importing necessary dependencies and styles
+import { useEffect, useState } from "react";
 import styles from "../styles/CheckOrder.module.css";
 
-const CheckOrderButton = ({ setclose }) => {
-  const dispatch = useDispatch();
-  const authState = useSelector((state) => state.auth);
-  const username = authState.user ? authState.user.username : null;
+// Functional component 'CheckOrderButton' to display a button for checking orders
+const CheckOrderButton = ({ setclose, user, token }) => {
+  // State to manage the client token and active user
+  const [clientToken, setToken] = useState(token);
+  const [ActiveUser, setUser] = useState(null);
 
+  // useEffect to update state based on the received props
   useEffect(() => {
-
-    const fetchData = async () => {
-      const tokenCookie = document.cookie.split(";").find((cookie) => cookie.trim().startsWith("token="));
-    
-      if (tokenCookie) {
-        try {
-          const response = await axios.get("/api/get-username", {
-            headers: {
-              Authorization: `Bearer ${tokenCookie.replace("token=", "")}`,
-            },
-          });
-    
-          if (response.status === 200) {
-            const { username } = response.data;
-            dispatch(loginUser({ username }));
-          } else {
-            // Handle unauthorized or other errors
-            console.error("Failed to fetch username");
-          }
-        } catch (error) {
-          console.error("Error fetching username:", error);
-        }
-      } else {
-        // If there is no token, dispatch logout action or update Redux state accordingly
-        dispatch(logoutUser());
-      }
-    };
-    
-
-    fetchData();
-  }, [authState.user, dispatch]);
+    // Check if the received token is the admin token
+    if (token === process.env.adminToken) {
+      // Set the client token and active user
+      setToken(token);
+      setUser(user);
+    }
+  }, [token, user]);
 
   return (
-    <>
-      <button onClick={() => setclose(false)} className={styles.checkOrderButton}>
-        {username ? `${username}'s Orders` : "Check Orders"}
-      </button>
-    </>
+    // Button to trigger the display of orders
+    <button onClick={() => setclose(false)} className={styles.checkOrderButton}>
+      {/* Displaying user-specific text if the client token and active user are present */}
+      {clientToken && ActiveUser !== null ? (`${user}'s Orders`) : ("Check Orders")}
+    </button>
   );
 };
 
+// Exporting the 'CheckOrderButton' component
 export default CheckOrderButton;

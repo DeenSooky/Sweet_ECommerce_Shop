@@ -3,7 +3,7 @@ import styles from "../../styles/index.module.css"
 import axios from 'axios';
 import Image from "next/image";
 import BlogPostPage from './[id]';
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import AddBlog from '../../Components/AddBlog';
 import Cookies from 'js-cookie';
 import UserBlogs from '../../Components/UserBlogs';
@@ -13,7 +13,11 @@ import EditBlog from "../../Components/EditBlog";
 const BlogPage = ({initialBlogPosts, sweetList, allBlogPostIds, initialBlogs}) => {
 
   // Retrieves token from browser
-  const token = Cookies.get('token')
+  const [clientToken, setClientToken] = useState(null)
+  
+  useEffect(() => {                            // Prevets hydration error
+    setClientToken(Cookies.get('token'))
+  }, [])
 
   // state mangement 
 
@@ -102,8 +106,7 @@ const BlogPage = ({initialBlogPosts, sweetList, allBlogPostIds, initialBlogs}) =
 
   // Add blog function 
   const handleAdd = () => {
-
-    if (token){
+    if (clientToken){
       setAddBlog({
         productName: '',  
         title: '',
@@ -122,7 +125,6 @@ const BlogPage = ({initialBlogPosts, sweetList, allBlogPostIds, initialBlogs}) =
   const handleCreate = async (newBlog) => {
 
     newBlog.createdAt = new Date()
-    console.log("Data: ", newBlog);
 
     try {
       await axios.post("http://localhost:3000/api/blogs", newBlog, {withCredentials: true});
@@ -242,7 +244,7 @@ const BlogPage = ({initialBlogPosts, sweetList, allBlogPostIds, initialBlogs}) =
   // shake animation upon unsuccessul search conditions
   const shakeAnimationClass =  searchSuccessful ? '' : styles.shake //success = nothing, unsuccess = shake
   // button style of add button for user with and without token
-  const buttonStyle = token ? styles.addButton: styles.addButtonNoToken
+  const buttonStyle = clientToken ? styles.addButton: styles.addButtonNoToken
 
   return (
     <div className={styles.container}>
@@ -251,7 +253,7 @@ const BlogPage = ({initialBlogPosts, sweetList, allBlogPostIds, initialBlogs}) =
 
       <div className={styles.buttons}> {/* Add blog and mange blogs button plus condtional rendering */}
         <button className={buttonStyle} onClick={() =>handleAdd(blogPosts._id)}><b>Add New Blog</b></button>
-        {token && <button className={styles.ManageButton} onClick={() => manageBlog()}>Manage your blogs</button>}
+        {clientToken && <button className={styles.ManageButton} onClick={() => manageBlog()}>Manage your blogs</button>}
         {showEditForm2 && ( <AddBlog handleCreate={handleCreate} onCancel={() => cancelEdit()}/>)}
         {showUserBlogs && (<UserBlogs handleEdit={handleEdit} handleDelete={handleDelete} userBlogPosts={userBlogPosts} timeFormat ={timeFormat} onCancel= {() => cancelEdit()}/>)}
       </div>
@@ -260,7 +262,7 @@ const BlogPage = ({initialBlogPosts, sweetList, allBlogPostIds, initialBlogs}) =
         {err && (<span className={styles.err}>{err}</span>)}
       </p>
 
-      {ShowEditBlogForm  &&  (<EditBlog editingBlog={editingBlog} ShowEditBlogForm={ShowEditBlogForm}  onSave={(updatedBlog) => handleSaveBlog(updatedBlog)} onCancel={cancelEdit} />)} {/*EditBlog component conditonal rendering*/}
+      {ShowEditBlogForm  &&  (<EditBlog editingBlog={editingBlog} onSave={(updatedBlog) => handleSaveBlog(updatedBlog)} onCancel={cancelEdit} />)} {/*EditBlog component conditonal rendering*/}
 
       <div className={`${styles.searchContainer} ${shakeAnimationClass}`}> {/* Search Bar and see all button components */}
         <input 
@@ -332,18 +334,30 @@ export const getServerSideProps = async (ctx) => {
     const blogPosts = res.data
     const allBlogPostIds = blogPosts.map((post) => post._id);
 
-    const res3 = await axios.get("http://localhost:3000/api/blogs/[id]", {
-      headers: {
-        Cookie: `${ctx.req.headers.cookie || ""}; Secure`
-      },
-    });
+    let initialBlogs = [];
+    
+    // Check if the token cookie is present
+    const token = ctx.req?.cookies?.token;
+
+    if (token) {
+      // If the token is present, make the request to fetch user-specific blogs
+      const res3 = await axios.get("http://localhost:3000/api/blogs/[id]", {
+        headers: {
+          Cookie: `${ctx.req.headers.cookie || ""}; Secure`,
+        },
+      });
+
+      initialBlogs = res3.data.initialBlogs;
+    }
+
+
 
     return {
       props: {
         initialBlogPosts: res.data,  //All blogs in database
         sweetList: res2.data,        //Product info for image display
         allBlogPostIds,              // all blog post id's
-        initialBlogs: res3.data.initialBlogs,  //blogs for a specific user
+        initialBlogs,  //blogs for a specific user
       },
     };
   } catch (error) {

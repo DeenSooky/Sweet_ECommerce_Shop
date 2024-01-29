@@ -24,8 +24,10 @@
     border: 3px solid black ;
     border-radius: 5px;
     left: 40px;
+}
 
-   
+.desc{
+    white-space: pre-line;
 }
 
 .imgContainer img {
@@ -74,6 +76,8 @@
     left: 20px;
     bottom: 10px;
 }
+
+
 
 .options1 {
     display: flex;
@@ -125,6 +129,7 @@
     cursor: pointer;
     border-radius: 50px;
 }
+
 
 .text {
     background-color: black;

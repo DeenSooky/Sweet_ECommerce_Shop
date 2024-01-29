@@ -2,7 +2,6 @@
     padding: 50px;
     display: flex;
     width: calc(100vw-100)
-    
 }
 
 .left {
@@ -11,6 +10,12 @@
 
 .right{
     flex: 1;
+}
+
+.checkOutError {
+    font-weight: bold;
+    align-self: center;
+    color: red;
 }
 
 .imgcontainer {

@@ -1,16 +1,17 @@
+// Import necessary modules
 import dbConnect from "../../../util/mongo";
 import Order from "../../../models/Order";
 import User from "../../../models/Users";
 
-//[users]
-// ... (imports and other code)
-
+// Define the API route handler
 const handler = async (req, res) => {
   const { method, cookies } = req;
   const userToken = cookies.token;
 
+  // Connect to the MongoDB database
   await dbConnect();
 
+  // Handling GET request
   if (method === "GET") {
     try {
       if (userToken) {
@@ -37,6 +38,5 @@ const handler = async (req, res) => {
   }
 };
 
+// Export the handler function
 export default handler;
-
-
